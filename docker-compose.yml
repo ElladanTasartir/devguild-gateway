@@ -1,0 +1,21 @@
+
+version: '3'
+
+services:
+  gateway-app:
+    container_name: devguild-gateway
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    ports:
+      - 4000:3000
+    volumes:
+      - .:/home/app:cached
+      - ./package.json:/home/app/package.json:cached
+    networks: 
+      - devguild-gateway-network
+
+networks:
+  devguild-gateway-network:
+    external:
+      name: default_services_network
