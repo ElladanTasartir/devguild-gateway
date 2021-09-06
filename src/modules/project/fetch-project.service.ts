@@ -26,4 +26,16 @@ export class FetchProjectsService {
 
     return data;
   }
+
+  async createProject(body: any): Promise<Project> {
+    const { data } = await this.httpService.post('/projects', body);
+
+    return data;
+  }
+
+  async insertTechnologiesInProject(id: string, body: any): Promise<Project> {
+    const { data } = await this.httpService.post(`/projects/${id}/techs`, body);
+
+    return data;
+  }
 }
