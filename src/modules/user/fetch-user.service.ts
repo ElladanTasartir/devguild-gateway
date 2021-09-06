@@ -23,9 +23,7 @@ export class FetchUsersService {
 
   async getUserByIds(ids: string): Promise<User[]> {
     const { data } = await this.httpService.get('/users', {
-      params: {
-        ids,
-      },
+      params: ids,
     });
 
     return data;
