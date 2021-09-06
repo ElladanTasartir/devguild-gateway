@@ -1,3 +1,5 @@
+import { Technology } from './technology.interface';
+
 export interface Project {
   id: string;
   title: string;
@@ -5,4 +7,5 @@ export interface Project {
   repository: string;
   created_at: string;
   updated_at: string;
+  technologies?: Technology[];
 }
