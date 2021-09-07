@@ -1,4 +1,5 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Technology } from '../project/interfaces/technology.interface';
 import { FetchUsersService } from './fetch-user.service';
 import { UserWithTechnology } from './interfaces/user-with-technology';
 import { User } from './interfaces/user.interface';
@@ -22,5 +23,32 @@ export class UserController {
     @Param('id') id: string,
   ): Promise<UserWithTechnology[]> {
     return this.fetchUsersService.getUsersByTechnologyId(id);
+  }
+
+  @Post()
+  cretenewUser(@Body() createUserBody: any): Promise<User> {
+    return this.fetchUsersService.createNewUser(createUserBody);
+  }
+
+  @Post()
+  insertProjectMember(
+    @Param('id') id: string,
+    @Body() insertProjectMemberBody: any,
+  ): Promise<void> {
+    return this.fetchUsersService.insertProjectMember(
+      id,
+      insertProjectMemberBody,
+    );
+  }
+
+  @Post()
+  insertTechnologiesInUser(
+    @Param('id') id: string,
+    @Body() insertTechnologiesInUserBody: any,
+  ): Promise<Technology[]> {
+    return this.fetchUsersService.insertTechnologiesInUser(
+      id,
+      insertTechnologiesInUserBody,
+    );
   }
 }
