@@ -24,7 +24,7 @@ export class GlobalExceptionFilter extends BaseExceptionFilter {
       );
       return;
     }
-
+    console.log(exception);
     const body = {
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
       message: 'Internal server error',
