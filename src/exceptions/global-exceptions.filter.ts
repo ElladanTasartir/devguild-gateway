@@ -1,9 +1,17 @@
-import { ArgumentsHost, Catch, HttpServer, HttpStatus } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  HttpServer,
+  HttpStatus,
+  Logger,
+} from '@nestjs/common';
 import { AbstractHttpAdapter, BaseExceptionFilter } from '@nestjs/core';
 import { AxiosError } from 'axios';
 
 @Catch()
 export class GlobalExceptionFilter extends BaseExceptionFilter {
+  logger: Logger = new Logger();
+
   catch(exception: Error, host: ArgumentsHost) {
     super.catch(exception, host);
   }
@@ -22,13 +30,17 @@ export class GlobalExceptionFilter extends BaseExceptionFilter {
         body,
         Number(body.statusCode),
       );
+      this.logger.setContext('axios');
+      this.logger.error(body);
       return;
     }
-    console.log(exception);
+
     const body = {
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
       message: 'Internal server error',
     };
+    this.logger.setContext('server-error');
+    this.logger.error(body);
     applicationRef.reply(host.getArgByIndex(1), body, body.statusCode);
   }
 }
