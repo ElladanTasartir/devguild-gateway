@@ -5,6 +5,7 @@ export interface User {
   username: string;
   email: string;
   avatar_url?: string;
+  github_id?: number;
   created_at: string;
   updated_at: string;
   technologies: Technology[];

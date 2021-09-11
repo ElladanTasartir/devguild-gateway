@@ -30,6 +30,12 @@ export class FetchUsersService {
     return data;
   }
 
+  async getUserByGithubId(id: number): Promise<User> {
+    const { data } = await this.httpService.get(`/users/${id}/github`);
+
+    return data;
+  }
+
   async getUsersByTechnologyId(id: string): Promise<UserWithTechnology[]> {
     const { data } = await this.httpService.get(`/users/technologies/${id}`);
 
