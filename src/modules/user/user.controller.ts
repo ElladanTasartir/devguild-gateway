@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { GetAuthenticatedUser } from '../auth/decorators/auth.decorator';
 import { Technology } from '../project/interfaces/technology.interface';
 import { FetchUsersService } from './fetch-user.service';
 import { UserWithTechnology } from './interfaces/user-with-technology';
@@ -9,24 +10,34 @@ export class UserController {
   constructor(private readonly fetchUsersService: FetchUsersService) {}
 
   @Get()
-  getUsersByIds(@Query() ids: string): Promise<User[]> {
+  getUsersByIds(
+    @Query() ids: string,
+    @GetAuthenticatedUser() _: string,
+  ): Promise<User[]> {
     return this.fetchUsersService.getUserByIds(ids);
   }
 
   @Get(':id')
-  getUserById(@Param('id') id: string): Promise<User> {
+  getUserById(
+    @Param('id') id: string,
+    @GetAuthenticatedUser() _: string,
+  ): Promise<User> {
     return this.fetchUsersService.getUserById(id);
   }
 
   @Get('technologies/:id')
   getUserByTechnologyId(
     @Param('id') id: string,
+    @GetAuthenticatedUser() _: string,
   ): Promise<UserWithTechnology[]> {
     return this.fetchUsersService.getUsersByTechnologyId(id);
   }
 
   @Post()
-  cretenewUser(@Body() createUserBody: any): Promise<User> {
+  cretenewUser(
+    @Body() createUserBody: any,
+    @GetAuthenticatedUser() _: string,
+  ): Promise<User> {
     return this.fetchUsersService.createNewUser(createUserBody);
   }
 
@@ -34,6 +45,7 @@ export class UserController {
   insertProjectMember(
     @Param('id') id: string,
     @Body() insertProjectMemberBody: any,
+    @GetAuthenticatedUser() _: string,
   ): Promise<void> {
     return this.fetchUsersService.insertProjectMember(
       id,
@@ -45,6 +57,7 @@ export class UserController {
   insertTechnologiesInUser(
     @Param('id') id: string,
     @Body() insertTechnologiesInUserBody: any,
+    @GetAuthenticatedUser() _: string,
   ): Promise<Technology[]> {
     return this.fetchUsersService.insertTechnologiesInUser(
       id,
