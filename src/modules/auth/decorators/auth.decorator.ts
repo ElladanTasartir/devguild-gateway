@@ -1,4 +1,8 @@
-import { createParamDecorator, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  createParamDecorator,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { verify } from 'jsonwebtoken';
 import { jwt } from '../../../config';
 
@@ -8,25 +12,24 @@ interface TokenPayload {
   sub: string;
 }
 
-export const GetAuthenticatedUser = createParamDecorator((
-  data,
-  context: ExecutionContext,
-): string => {
-  const { authorization } = context.switchToHttp().getRequest().headers;
+export const GetAuthenticatedUser = createParamDecorator(
+  (data, context: ExecutionContext): string => {
+    const { authorization } = context.switchToHttp().getRequest().headers;
 
-  if (!authorization) {
-    throw new UnauthorizedException("JWT wasn't provided");
-  }
+    if (!authorization) {
+      throw new UnauthorizedException("JWT wasn't provided");
+    }
 
-  const [, token] = authorization.split(' ');
+    const [, token] = authorization.split(' ');
 
-  try {
-    const decoded = verify(token, jwt.secret);
+    try {
+      const decoded = verify(token, jwt.secret);
 
-    const { sub } = decoded as TokenPayload;
+      const { sub } = decoded as TokenPayload;
 
-    return sub;
-  } catch (err) {
-    throw new UnauthorizedException("Invalid JWT provided");
-  }
-});
+      return sub;
+    } catch (err) {
+      throw new UnauthorizedException('Invalid JWT provided');
+    }
+  },
+);
