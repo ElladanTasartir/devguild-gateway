@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { GetAuthenticatedUser } from '../auth/decorators/auth.decorator';
 import { Technology } from '../project/interfaces/technology.interface';
 import { FetchUsersService } from './fetch-user.service';
@@ -34,11 +34,19 @@ export class UserController {
   }
 
   @Post()
-  cretenewUser(
+  creteNewUser(
     @Body() createUserBody: any,
     @GetAuthenticatedUser() _: string,
   ): Promise<User> {
     return this.fetchUsersService.createNewUser(createUserBody);
+  }
+
+  @Put()
+  updateUser(
+    @Body() updateUserBody: any,
+    @GetAuthenticatedUser() id: string,
+  ): Promise<User> {
+    return this.fetchUsersService.updateUser(id, updateUserBody);
   }
 
   @Post()
