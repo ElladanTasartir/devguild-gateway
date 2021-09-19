@@ -2,6 +2,8 @@ import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { GetAuthenticatedUser } from '../auth/decorators/auth.decorator';
 import { FetchUsersService } from '../user/fetch-user.service';
 import { ProjectMembers } from '../user/interfaces/project-members';
+import { UserComments } from '../user/interfaces/user-comments';
+import { UserCommentsWithUser } from '../user/interfaces/user-comments-with-user';
 import { FetchProjectsService } from './fetch-project.service';
 import { Project } from './interfaces/project.interface';
 
@@ -28,12 +30,29 @@ export class ProjectController {
     return this.fetchProjectsService.getProjectById(id);
   }
 
+  @Get(':id/comments')
+  getUserCommentsByProjectId(
+    @Param('id') id: string,
+    @GetAuthenticatedUser() _: string,
+  ): Promise<UserCommentsWithUser[]> {
+    return this.fetchUsersService.getUserCommentsByProjectId(id);
+  }
+
   @Post()
   createProject(
     @Body() createProjectBody: any,
     @GetAuthenticatedUser() _: string,
   ): Promise<Project> {
     return this.fetchProjectsService.createProject(createProjectBody);
+  }
+
+  @Post(':id/comments')
+  insertComment(
+    @Param('id') id: string,
+    @Body() insertCommentBody: any,
+    @GetAuthenticatedUser() user_id: string,
+  ): Promise<UserComments> {
+    return this.fetchUsersService.insertComment(id, insertCommentBody, user_id);
   }
 
   @Post(':id/techs')
