@@ -33,6 +33,12 @@ export class FetchProjectsService {
     return data;
   }
 
+  async updateProject(id: string, body: any): Promise<Project> {
+    const { data } = await this.httpService.put(`/projects/${id}`, body);
+
+    return data;
+  }
+
   async insertTechnologiesInProject(id: string, body: any): Promise<Project> {
     const { data } = await this.httpService.post(`/projects/${id}/techs`, body);
 

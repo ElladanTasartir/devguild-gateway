@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { GetAuthenticatedUser } from '../auth/decorators/auth.decorator';
 import { FetchUsersService } from '../user/fetch-user.service';
 import { ProjectMembers } from '../user/interfaces/project-members';
@@ -41,9 +41,24 @@ export class ProjectController {
   @Post()
   createProject(
     @Body() createProjectBody: any,
-    @GetAuthenticatedUser() _: string,
+    @GetAuthenticatedUser() user_id: string,
   ): Promise<Project> {
-    return this.fetchProjectsService.createProject(createProjectBody);
+    return this.fetchProjectsService.createProject({
+      ...createProjectBody,
+      user_id,
+    });
+  }
+
+  @Put(':id')
+  updateProject(
+    @GetAuthenticatedUser() user_id: string,
+    @Param('id') id: string,
+    @Body() updateProjectBody: any,
+  ): Promise<Project> {
+    return this.fetchProjectsService.updateProject(id, {
+      ...updateProjectBody,
+      user_id,
+    });
   }
 
   @Post(':id/comments')
