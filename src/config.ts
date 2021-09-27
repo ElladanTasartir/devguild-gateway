@@ -8,6 +8,7 @@ config({ path: envFile });
 const REQUIRED_ENV_VARS = [
   'DEVGUILD_USER_SERVICE_URL',
   'DEVGUILD_PROJECT_SERVICE_URL',
+  'DEVGUILD_TECH_SERVICE_URL',
   'JWT_SECRET',
   'JWT_EXPIRES_IN',
 ];
@@ -24,6 +25,7 @@ export const gatewayTimeout = Number(process.env.GATEWAY_TIMEOUT) || 1000;
 
 export const devguildUserServiceUrl = `http://${process.env.DEVGUILD_USER_SERVICE_URL}`;
 export const devguildProjectServiceUrl = `http://${process.env.DEVGUILD_PROJECT_SERVICE_URL}`;
+export const devguildTechServiceUrl = `http://${process.env.DEVGUILD_TECH_SERVICE_URL}`;
 
 export const jwt = {
   secret: process.env.JWT_SECRET,
