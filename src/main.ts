@@ -18,7 +18,7 @@ async function bootstrap() {
   app.useGlobalFilters(new GlobalExceptionFilter(httpAdapter));
   app.useGlobalInterceptors(new TimeoutInterceptor());
   await app.listen(port, () =>
-    logger.log(`Devguild Gateway listening on port "${port}"`),
+    logger.verbose(`Devguild Gateway listening on port "${port}"`),
   );
 }
 bootstrap();

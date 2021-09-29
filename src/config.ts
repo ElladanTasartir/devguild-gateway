@@ -20,7 +20,7 @@ REQUIRED_ENV_VARS.forEach((envVar) => {
   }
 });
 
-export const port = Number(process.env.PORT) || 3000;
+export const port = Number(process.env.PORT) || 4000;
 export const gatewayTimeout = Number(process.env.GATEWAY_TIMEOUT) || 1000;
 
 export const devguildUserServiceUrl = `http://${process.env.DEVGUILD_USER_SERVICE_URL}`;
