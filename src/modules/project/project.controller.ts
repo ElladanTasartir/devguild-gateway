@@ -30,6 +30,20 @@ export class ProjectController {
     return this.fetchProjectsService.getProjectById(id);
   }
 
+  @Get('/user/id')
+  findProjectsByUserId(
+    @GetAuthenticatedUser() user_id: string,
+  ): Promise<Project[]> {
+    return this.fetchProjectsService.getProjectsByUserId(user_id);
+  }
+
+  @Get('/user/member')
+  findProjectsWhereUserIsAMember(
+    @GetAuthenticatedUser() user_id: string,
+  ): Promise<Project[]> {
+    return this.fetchProjectsService.getProjectsWhereUserIsAMember(user_id);
+  }
+
   @Get(':id/comments')
   getUserCommentsByProjectId(
     @Param('id') id: string,

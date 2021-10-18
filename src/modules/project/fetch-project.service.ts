@@ -27,6 +27,20 @@ export class FetchProjectsService {
     return data;
   }
 
+  async getProjectsByUserId(user_id: string): Promise<Project[]> {
+    const { data } = await this.httpService.get(`/projects/${user_id}/user`);
+
+    return data;
+  }
+
+  async getProjectsWhereUserIsAMember(user_id: string): Promise<Project[]> {
+    const { data } = await this.httpService.get<Project[]>(
+      `/projects/${user_id}/project-members`,
+    );
+
+    return data;
+  }
+
   async createProject(body: any): Promise<Project> {
     const { data } = await this.httpService.post('/projects', body);
 
