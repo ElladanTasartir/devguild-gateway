@@ -50,18 +50,6 @@ export class UserController {
   }
 
   @Post()
-  insertProjectMember(
-    @Param('id') id: string,
-    @Body() insertProjectMemberBody: any,
-    @GetAuthenticatedUser() _: string,
-  ): Promise<void> {
-    return this.fetchUsersService.insertProjectMember(
-      id,
-      insertProjectMemberBody,
-    );
-  }
-
-  @Post()
   insertTechnologiesInUser(
     @Param('id') id: string,
     @Body() insertTechnologiesInUserBody: any,

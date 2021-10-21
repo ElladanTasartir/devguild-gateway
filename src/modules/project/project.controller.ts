@@ -103,4 +103,12 @@ export class ProjectController {
   ): Promise<ProjectMembers[]> {
     return this.fetchUsersService.getProjectMembers(id);
   }
+
+  @Post(':id/members')
+  insertProjectMember(
+    @Param('id') id: string,
+    @GetAuthenticatedUser() user_id: string,
+  ): Promise<void> {
+    return this.fetchUsersService.insertProjectMember(id, user_id);
+  }
 }

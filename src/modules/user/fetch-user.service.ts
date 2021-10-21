@@ -76,10 +76,12 @@ export class FetchUsersService {
     return data;
   }
 
-  async insertProjectMember(id: string, body: any): Promise<null> {
+  async insertProjectMember(id: string, user_id: string): Promise<null> {
     const { data } = await this.httpService.post<null>(
       `/projects/${id}/members`,
-      body,
+      {
+        user_id,
+      },
     );
 
     return data;
