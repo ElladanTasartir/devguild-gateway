@@ -111,4 +111,8 @@ export class FetchUsersService {
 
     return data;
   }
+
+  async processUserInfo(id: string): Promise<void> {
+    await this.httpService.post(`users/${id}/process-user`);
+  }
 }
