@@ -58,7 +58,7 @@ export class UserController {
     );
   }
 
-  @Post('/users/process-user')
+  @Post('/process-user')
   processUserInfo(@GetAuthenticatedUser() user_id: string): Promise<void> {
     return this.fetchUsersService.processUserInfo(user_id);
   }
