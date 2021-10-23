@@ -1,7 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import axios, { AxiosInstance } from '@nestjs/common/node_modules/axios';
 import { devguildTechServiceUrl } from 'src/config';
-import { Technology } from '../project/interfaces/technology.interface';
+import { Technology } from './interfaces/technologies.interface';
 
 @Injectable()
 export class FetchTechService {
@@ -28,5 +32,36 @@ export class FetchTechService {
     });
 
     return technologies;
+  }
+
+  async createTechnology(name: string): Promise<Technology> {
+    const { data } = await this.httpService.post('', {
+      query: `mutation CreateTechnology($name: String!) {
+        createTechnology(createTechnologyInput: {
+          name: $name
+        }) {
+          id,
+          name
+        }
+      }`,
+      variables: {
+        name,
+      },
+    });
+
+    if (data?.errors?.length) {
+      switch (data.errors[0].extensions.code) {
+        case '422': {
+          throw new UnprocessableEntityException(
+            `Technology ${name} is already inserted`,
+          );
+        }
+        default: {
+          throw new BadRequestException(`Couldn't create technology ${name}`);
+        }
+      }
+    }
+
+    return data.data?.createTechnology;
   }
 }
