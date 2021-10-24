@@ -23,9 +23,10 @@ REQUIRED_ENV_VARS.forEach((envVar) => {
 export const port = Number(process.env.PORT) || 4000;
 export const gatewayTimeout = Number(process.env.GATEWAY_TIMEOUT) || 1000;
 
-export const devguildUserServiceUrl = `http://${process.env.DEVGUILD_USER_SERVICE_URL}`;
-export const devguildProjectServiceUrl = `http://${process.env.DEVGUILD_PROJECT_SERVICE_URL}`;
-export const devguildTechServiceUrl = `http://${process.env.DEVGUILD_TECH_SERVICE_URL}`;
+export const devguildUserServiceUrl = process.env.DEVGUILD_USER_SERVICE_URL;
+export const devguildProjectServiceUrl =
+  process.env.DEVGUILD_PROJECT_SERVICE_URL;
+export const devguildTechServiceUrl = process.env.DEVGUILD_TECH_SERVICE_URL;
 
 export const jwt = {
   secret: process.env.JWT_SECRET,
