@@ -18,8 +18,16 @@ export class UserController {
   }
 
   @Get('/me')
-  getUserById(@GetAuthenticatedUser() user_id: string): Promise<User> {
+  getOwnUser(@GetAuthenticatedUser() user_id: string): Promise<User> {
     return this.fetchUsersService.getUserById(user_id);
+  }
+
+  @Get('/:id')
+  getUserById(
+    @GetAuthenticatedUser() _: string,
+    @Param('id') id: string,
+  ): Promise<User> {
+    return this.fetchUsersService.getUserById(id);
   }
 
   @Get('technologies/:id')
